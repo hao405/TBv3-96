@@ -1,0 +1,16 @@
+--- Optuna Results for Dataset: ETTm1, Seq_len: 96, Pred Len: 96 ---
+
+Total trials completed: 8
+
+--- Best Trial ---
+Objective Value (mae+mse): 0.6548778
+Corresponding Test MAE: 0.3453269
+Corresponding Test MSE: 0.3095509
+
+Best Hyperparameters:
+  - learning_rate: 2.955349799000323e-05
+  - batch_size: 16
+  - ca_layers: 1
+  - ia_layers: 2
+  - n_heads: 8
+  - alpha: 0.31961811405951196

@@ -1,0 +1,17 @@
+--- Optuna Results for Dataset: ETTh1, Seq_len: 720, Pred Len: 720 ---
+
+Total trials completed: 30
+
+--- Best Trial ---
+Objective Value (mae+mse): 0.9240451
+Corresponding Test MAE: 0.4715635
+Corresponding Test MSE: 0.4524816
+
+Best Hyperparameters:
+  - learning_rate: 0.0002660387205583628
+  - batch_size: 64
+  - attn_dropout: 0.25
+  - n_heads: 16
+  - num_p: 6
+  - alpha: 0.18663841444787474
+  - d_ff_multiplier: 2
