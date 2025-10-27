@@ -105,7 +105,7 @@ def objective(trial):
     args.pd_layers = 1
     args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
 
-    possible_n_heads = [h for h in [ 4,8,16] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [2,4,8,16] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
@@ -165,7 +165,7 @@ if __name__ == '__main__':
 
     # 'n_trials' 是你想要尝试的超参数组合的总次数
     # 从一个较小的数字开始，比如 20，然后再增加
-    study.optimize(objective, n_trials=6)
+    study.optimize(objective, n_trials=20)
 
     # ---- 6. 输出优化结果 ----
     print("\n\n--- 优化完成 ---")

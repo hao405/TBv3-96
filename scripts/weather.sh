@@ -16,15 +16,15 @@ fi
 
 model_name=TimeBridge
 seq_len=96
-GPU=0
+GPU=2
 root=./dataset
 
 alpha=0.1
 data_name=weather
-for pred_len in 96 192 336 720
+for pred_len in 96 192 336 720 96 192 336 720
 do
   HIP_VISIBLE_DEVICES=$GPU \
-  python -u tune1.py \
+  python -u tune3.py \
     --is_training 1 \
     --root_path $root/weather/ \
     --data_path weather.csv \

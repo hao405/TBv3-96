@@ -13,7 +13,7 @@ fi
 
 model_name=TimeBridge
 seq_len=96
-GPU=0
+GPU=1
 root=./dataset
 
 alpha=0.35
@@ -21,7 +21,7 @@ data_name=ETTm1
 for pred_len in 96 192 336 720 96 192 336 720
 do
   HIP_VISIBLE_DEVICES=$GPU \
-  python -u tune.py \
+  python -u tune2.py \
     --is_training 1 \
     --root_path $root/ETT-small/ \
     --data_path $data_name.csv \

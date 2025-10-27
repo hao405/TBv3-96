@@ -15,10 +15,10 @@ root=./dataset
 
 alpha=0.35
 data_name=ETTh2
-for pred_len in 336 720
+for pred_len in 336 720 336 720
 do
   HIP_VISIBLE_DEVICES=$GPU \
-  python -u tune.py \
+  python -u tune2.py \
     --is_training 1 \
     --root_path $root/ETT-small/ \
     --data_path $data_name.csv \

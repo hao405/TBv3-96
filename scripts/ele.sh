@@ -46,5 +46,5 @@ do
     --devices 0,1,2,3,4,5,6,7 \
     --use_multi_gpu \
     --learning_rate 0.0005 \
-    --itr 1 > logs/LongForecasting/TimeBridge/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
+    --itr 1 | tee logs/test/new/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
 done

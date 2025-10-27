@@ -98,12 +98,16 @@ def objective(trial):
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
     args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 1e-3, log=True)
+    if args.data_path == 'electricity.csv':
+        args.batch_size = trial.suggest_categorical('batch_size', [64])
+    elif args.data_path == 'traffic.csv':
+        args.batch_size = trial.suggest_categorical('batch_size', [32])
     args.batch_size = trial.suggest_categorical('batch_size', [16,32,48,64])
 
     # # 学习率调度器
-    args.ca_layers = trial.suggest_categorical('ca_layers', [2,3,4])
-    args.pd_layers = 1
-    args.ia_layers = trial.suggest_categorical('ia_layers', [0,1])
+    # args.ca_layers = trial.suggest_categorical('ca_layers', [2,3])
+    # args.pd_layers = 1
+    # args.ia_layers = trial.suggest_categorical('ia_layers', [0,1])
     # args.attn_dropout = trial.suggest_float('attn_dropout', 0, 0.25, step=0.05)
     possible_n_heads = [h for h in [ 4,8,16] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
@@ -169,7 +173,7 @@ if __name__ == '__main__':
 
     # 'n_trials' 是你想要尝试的超参数组合的总次数
     # 从一个较小的数字开始，比如 20，然后再增加
-    study.optimize(objective, n_trials=8)
+    study.optimize(objective, n_trials=3)
 
     # ---- 6. 输出优化结果 ----
     print("\n\n--- 优化完成 ---")
