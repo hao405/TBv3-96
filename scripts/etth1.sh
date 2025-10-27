@@ -2,12 +2,9 @@ if [ ! -d "./logs" ]; then
     mkdir ./logs
 fi
 
-if [ ! -d "./logs/test" ]; then
-    mkdir ./logs/test
-fi
 
-if [ ! -d "./logs/test/new" ]; then
-    mkdir ./logs/test/new
+if [ ! -d "./logs/96" ]; then
+    mkdir ./logs/96
 fi
 
 model_name=TimeBridge
@@ -17,9 +14,9 @@ root=./dataset
 
 alpha=0.35
 data_name=ETTh1
-for pred_len in 96 192 336 720 96 192 336 720
+for pred_len in 192 192
 do
-  CUDA_VISIBLE_DEVICES=$GPU \
+  HIP_VISIBLE_DEVICES=$GPU \
   python -u tune.py \
     --is_training 1 \
     --root_path $root/ETT-small/ \
@@ -43,5 +40,5 @@ do
     --learning_rate 0.0002 \
     --train_epochs 100 \
     --patience 10 \
-    --itr 1 | tee logs/test/new/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
+    --itr 1 | tee logs/96/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
 done

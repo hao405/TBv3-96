@@ -20,7 +20,7 @@ data_name=traffic
 GPU=0,1
 for pred_len in 336 720 192 96; do
   seq_len=$pred_len
-  CUDA_VISIBLE_DEVICES=$GPU \
+  HIP_VISIBLE_DEVICES=$GPU \
   python -u tune.py \
     --is_training 1 \
     --root_path $root/traffic/ \

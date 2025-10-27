@@ -23,7 +23,7 @@ alpha=0.1
 data_name=weather
 for pred_len in 96 192 336 720 96 192 336 720
 do
-  CUDA_VISIBLE_DEVICES=$GPU \
+  HIP_VISIBLE_DEVICES=$GPU \
   python -u tune1.py \
     --is_training 1 \
     --root_path $root/weather/ \

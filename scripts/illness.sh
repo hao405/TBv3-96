@@ -19,7 +19,7 @@ alpha=0.2
 data_name=illness
 for pred_len in 24 36 48 60 24 36 48 60
 do
-  CUDA_VISIBLE_DEVICES=$GPU \
+  HIP_VISIBLE_DEVICES=$GPU \
   python -u tune2.py \
     --is_training 1 \
     --root_path $root/illness/ \

@@ -19,7 +19,7 @@ alpha=0.35
 data_name=exchange_rate
 for pred_len in 96 192 336 720 96 192 336 720
 do
-  CUDA_VISIBLE_DEVICES=$GPU \
+  HIP_VISIBLE_DEVICES=$GPU \
   python -u tune2.py \
     --is_training 1 \
     --root_path $root/exchange_rate/ \
