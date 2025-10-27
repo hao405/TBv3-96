@@ -205,9 +205,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         preds = []
         trues = []
-        folder_path = './test_results/' + setting + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
 
         self.model.eval()
         with torch.no_grad():
@@ -260,7 +257,6 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             preds = test_data.inverse_transform(preds.reshape(-1, C)).reshape(B, T, C)
             trues = test_data.inverse_transform(trues.reshape(-1, C)).reshape(B, T, C)
 
-        # result save
         folder_path = './results/' + setting + '/'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
@@ -268,7 +264,12 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         mae, mse, rmse, mape, mspe = metric(preds, trues)
         print('mse:{}, mae:{}'.format(mse, mae))
         print('rmse:{}, mape:{}, mspe:{}'.format(rmse, mape, mspe))
-        f = open("result_long_term_forecast.txt", 'a')
+
+
+        file_path = os.path.join(folder_path, "result_long_term_forecast.txt")
+
+        # 使用完整的路径打开文件
+        f = open(file_path, 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mse:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
         f.write('\n')
