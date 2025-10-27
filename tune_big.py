@@ -115,9 +115,9 @@ def objective(trial):
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     # args.num_p = trial.suggest_categorical('num_p', [4,6,8,12])
     if args.data_path == 'electricity.csv':
-        argsargs.alpha = trial.suggest_float('alpha', 0.15, 0.25, log=True)
+        args.alpha = trial.suggest_float('alpha', 0.15, 0.25, log=True)
     elif args.data_path == 'traffic.csv':
-        argsargs.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
+        args.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
 
     # 打印本次试验的参数
     print(f"\n--- [Trial {trial.number}] 参数 ---")
