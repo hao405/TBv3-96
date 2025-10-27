@@ -126,8 +126,11 @@ def objective(trial):
 
     # ---- 3. 运行实验 ----
     # 设置 GPU
-    if args.use_gpu:
-        torch.cuda.set_device(args.gpu)
+    if args.use_gpu and args.use_multi_gpu:
+        args.devices = args.devices.replace(' ', '')
+        device_ids = args.devices.split(',')
+        args.device_ids = [int(id_) for id_ in device_ids]
+        args.gpu = args.device_ids[0]
 
     # 实例化实验
     exp = Exp_Long_Term_Forecast(args)
