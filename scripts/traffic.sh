@@ -12,16 +12,17 @@ fi
 
 model_name=TimeBridge
 seq_len=96
-GPU=1
+GPU=0,1,2,3,4,5,6,7
 root=./dataset
 
 alpha=0.35
 data_name=traffic
-GPU=0,1
-for pred_len in 336 720 192 96; do
-  seq_len=$pred_len
-  HIP_VISIBLE_DEVICES=$GPU \
-  python -u tune.py \
+for pred_len in 336 720 192 96;
+do
+  MIOPEN_DISABLE_CACHE=1 \
+  MIOPEN_SYSTEM_DB_PATH="" \
+  HIP_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" \
+  python -u run.py \
     --is_training 1 \
     --root_path $root/traffic/ \
     --data_path traffic.csv \
@@ -44,13 +45,13 @@ for pred_len in 336 720 192 96; do
     --ia_layers 1 \
     --batch_size 4 \
     --attn_dropout 0.15 \
-    --patience 5 \
+    --patience 10 \
     --train_epochs 100 \
-    --devices 0,1,2,3 \
-#    --use_multi_gpu \
+    --devices 0,1,2,3,4,5,6,7 \
+    --use_multi_gpu \
     --alpha $alpha \
     --learning_rate 0.0005 \
-    --itr 1 | tee logs/test/new/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
+    --itr 1 > logs/LongForecasting/TimeBridge/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
 done
 
 #alpha=0.35

@@ -11,17 +11,15 @@ if [ ! -d "./logs/test/new" ]; then
     mkdir ./logs/test/new
 fi
 
-model_name=TimeBridge
-seq_len=96
-GPU=1
-root=./dataset
-
 alpha=0.2
+GPU=0,1,2,3,4,5,6,7
 data_name=electricity
-for pred_len in 96 192 336 720 96 192 336 720
+for pred_len in 96 192 336 720
 do
-  HIP_VISIBLE_DEVICES=$GPU \
-  python -u tune3.py \
+  MIOPEN_DISABLE_CACHE=1 \
+  MIOPEN_SYSTEM_DB_PATH="" \
+  HIP_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" \
+  python -u run.py \
     --is_training 1 \
     --root_path $root/electricity/ \
     --data_path electricity.csv \
@@ -45,6 +43,8 @@ do
     --stable_len 4 \
     --alpha $alpha \
     --batch_size 16 \
+    --devices 0,1,2,3,4,5,6,7 \
+    --use_multi_gpu \
     --learning_rate 0.0005 \
-    --itr 1 | tee logs/test/new/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
+    --itr 1 > logs/LongForecasting/TimeBridge/$data_name'_'$alpha'_'$model_name'_'$pred_len.logs
 done
