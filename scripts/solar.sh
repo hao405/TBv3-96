@@ -12,7 +12,7 @@ fi
 
 model_name=TimeBridge
 seq_len=720
-GPU=0
+GPU=7
 root=./dataset
 
 alpha=0.05
