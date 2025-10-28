@@ -17,10 +17,10 @@ root=./dataset
 
 alpha=0.05
 data_name=Solar
-for pred_len in 96 192 336 720
+for pred_len in 96 192 336 720 96 192 336 720
 do
   CUDA_VISIBLE_DEVICES=$GPU \
-  python -u run.py \
+  python -u tune.py \
     --is_training 1 \
     --root_path $root/Solar/ \
     --data_path solar_AL.txt \

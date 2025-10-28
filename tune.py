@@ -97,7 +97,7 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 1e-5, 1e-3, log=True)
+    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 1e-3, log=True)
     args.batch_size = trial.suggest_categorical('batch_size', [16,32,48,64])
 
     # 学习率调度器
@@ -106,9 +106,9 @@ def objective(trial):
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [1,2,3])
     else:
-        args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
+        args.ca_layers = trial.suggest_categorical('ca_layers', [0,1,2])
         args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
+        args.ia_layers = trial.suggest_categorical('ia_layers', [1,2,3])
     possible_n_heads = [h for h in [ 4,8,16] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
@@ -117,7 +117,7 @@ def objective(trial):
     if args.data_path == 'exchange_rate.csv':
         args.alpha = trial.suggest_float('alpha', 0.05, 0.40, log=True)
     else:
-        args.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
+        args.alpha = trial.suggest_float('alpha', 0.03, 0.15, log=True)
     # # d_ff 通常是 d_model 的倍数
     #args.d_ff = trial.suggest_categorical('d_ff_multiplier', [1, 2, 4]) * args.d_model
 
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         print(f"    - {key}: {value}")
 
     # ---- 7. 将最佳结果写入文件 ----
-    output_dir = 'optuna'
+    output_dir = 'optuna_solar'
     os.makedirs(output_dir, exist_ok=True)  # 确保文件夹存在
     # 从 data_path 中提取基本文件名，以避免路径问题
     # 例如, 从 './dataset/ETTh1.csv' 提取出 'ETTh1'
