@@ -7,6 +7,9 @@ if [ ! -d "./logs/96" ]; then
     mkdir ./logs/96
 fi
 
+
+
+
 model_name=TimeBridge
 seq_len=96
 GPU=0
