@@ -17,7 +17,7 @@ root=./dataset
 
 alpha=0.35
 data_name=exchange_rate
-for pred_len in 96 192 336 720 96 192 336 720
+for pred_len in 96 192 336 96 192 336
 do
   HIP_VISIBLE_DEVICES=$GPU \
   python -u tune2.py \

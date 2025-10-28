@@ -10,9 +10,12 @@ fi
 if [ ! -d "./logs/test/new" ]; then
     mkdir ./logs/test/new
 fi
+model_name=TimeBridge
+seq_len=96
+GPU=0,1,2,3,4,5,6,7
+root=./dataset
 
 alpha=0.2
-GPU=0,1,2,3,4,5,6,7
 data_name=electricity
 for pred_len in 96 192 336 720
 do
