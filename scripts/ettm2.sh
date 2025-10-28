@@ -15,6 +15,9 @@ model_name=TimeBridge
 seq_len=96
 GPU=1
 root=./dataset
+export MIOPEN_DISABLE_CACHE=1
+export MIOPEN_DEBUG_DISABLE_FIND_DB=1
+export HIP_VISIBLE_DEVICES=$GPU
 
 alpha=0.35
 data_name=ETTm2
