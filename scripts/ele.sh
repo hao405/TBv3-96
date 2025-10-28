@@ -17,7 +17,7 @@ root=./dataset
 
 alpha=0.2
 data_name=electricity
-for pred_len in 96 192 336 720
+for pred_len in 720 96 192 336
 do
   MIOPEN_DISABLE_CACHE=1 \
   MIOPEN_SYSTEM_DB_PATH="" \
