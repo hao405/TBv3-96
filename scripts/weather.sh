@@ -15,7 +15,9 @@ model_name=TimeBridge
 seq_len=96
 GPU=0
 root=./dataset
-
+export MIOPEN_DISABLE_CACHE=1
+export MIOPEN_DEBUG_DISABLE_FIND_DB=1
+export HIP_VISIBLE_DEVICES=$GPU
 alpha=0.1
 data_name=weather
 for pred_len in 96 192 336 720 96 192 336 720
