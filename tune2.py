@@ -105,6 +105,10 @@ def objective(trial):
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [1,2,3])
+    elif args.data_path == 'ETTm2.csv':
+        args.ca_layers = trial.suggest_categorical('ca_layers', [1])
+        args.pd_layers = 1
+        args.ia_layers = trial.suggest_categorical('ia_layers', [2])
     else:
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
@@ -172,7 +176,7 @@ if __name__ == '__main__':
 
     # 'n_trials' 是你想要尝试的超参数组合的总次数
     # 从一个较小的数字开始，比如 20，然后再增加
-    study.optimize(objective, n_trials=10)
+    study.optimize(objective, n_trials=3)
 
     # ---- 6. 输出优化结果 ----
     print("\n\n--- 优化完成 ---")
