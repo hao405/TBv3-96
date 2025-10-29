@@ -97,14 +97,14 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 3e-4, log=True)
+    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 5e-4, log=True)
     args.batch_size = trial.suggest_categorical('batch_size', [16, 32, 48, 64])
     
     # 学习率调度器
     if args.data_path == 'exchange_rate.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [1,2,3])
+        args.ia_layers = trial.suggest_categorical('ia_layers', [1,2])
     elif args.data_path == 'ETTm2.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
         args.pd_layers = 1
@@ -121,7 +121,7 @@ def objective(trial):
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     
     if args.data_path == 'exchange_rate.csv':
-        args.alpha = trial.suggest_float('alpha', 0.05, 0.40, log=True)
+        args.alpha = trial.suggest_float('alpha', 0.05, 0.2, log=True)
     else:
         args.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
 
