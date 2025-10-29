@@ -100,7 +100,7 @@ def objective(trial):
     if args.data_path == 'electricity.csv':
         args.batch_size = trial.suggest_categorical('batch_size', [64])
     elif args.data_path == 'traffic.csv':
-        args.batch_size = trial.suggest_categorical('batch_size', [48])
+        args.batch_size = trial.suggest_categorical('batch_size', [24])
     else:
         args.batch_size = trial.suggest_categorical('batch_size', [16,32,48,64])
 
