@@ -122,6 +122,7 @@ def objective(trial):
     # 打印本次试验的参数
     print(f"\n--- [Trial {trial.number}] 参数 ---")
     param_str = ", ".join([f"{k}={v}" for k, v in trial.params.items()])
+    print(f"{args.data_path}_seqlen_{args.seq_len}_predlen_{args.pred_len}\n")
     print(param_str)
 
     # ---- 3. 运行实验 ----
