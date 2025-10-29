@@ -177,7 +177,7 @@ if __name__ == '__main__':
 
     # 'n_trials' 是你想要尝试的超参数组合的总次数
     # 从一个较小的数字开始，比如 20，然后再增加
-    study.optimize(objective, n_trials=3)
+    study.optimize(objective, n_trials=2)
 
     # ---- 6. 输出优化结果 ----
     print("\n\n--- 优化完成 ---")
