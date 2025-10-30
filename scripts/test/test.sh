@@ -17,7 +17,7 @@ root=./dataset
 
 alpha=0.1
 data_name=weather
-for pred_len in 720
+for pred_len in 96 192 336 720
 do
   CUDA_VISIBLE_DEVICES=$GPU \
   python -u tune3.py \
