@@ -99,12 +99,16 @@ def objective(trial):
 
     args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 5e-4, log=True)
     args.batch_size = trial.suggest_categorical('batch_size', [16, 32, 48, 64])
-    
+
+
     # 学习率调度器
     if args.data_path == 'exchange_rate.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [1,2])
+        args.d_model = trial.suggest_categorical('d_model', [64, 128, 256 ,512])
+        args.d_ff = trial.suggest_categorical('d_ff', [args.d_model, args.d_model * 2])
+        args.alpha = trial.suggest_float('alpha', 0.05, 0.2, log=True)
     elif args.data_path == 'ETTm2.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
         args.pd_layers = 1
@@ -113,17 +117,16 @@ def objective(trial):
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
+        args.alpha = trial.suggest_float('alpha', 0.28, 0.40, log=True)
         
-    possible_n_heads = [h for h in [ 4,8,16,32] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [4,8,16,32] if args.d_model % h == 0]
     
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     
-    if args.data_path == 'exchange_rate.csv':
-        args.alpha = trial.suggest_float('alpha', 0.05, 0.2, log=True)
-    else:
-        args.alpha = trial.suggest_float('alpha', 0.28, 0.40, log=True)
+
+
 
     # 打印本次试验的参数
     print(f"\n--- [Trial {trial.number}] 参数 ---")

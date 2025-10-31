@@ -42,7 +42,7 @@ do
     --ia_layers 3 \
     --des 'Exp' \
     --n_heads 4 \
-    --d_model 64  \
+    --d_model 128  \
     --d_ff 128 \
     --lradj 'TST' \
     --period 48 \
