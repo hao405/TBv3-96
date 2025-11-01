@@ -114,13 +114,6 @@ def objective(trial):
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [2])
         args.alpha = trial.suggest_float('alpha', 0.28, 0.40, log=True)
-    if args.data_path == 'ETTh2.csv':
-        args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
-        args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
-        args.d_model = trial.suggest_categorical('d_model', [64, 128, 256 ,512])
-        args.d_ff = trial.suggest_categorical('d_ff', [args.d_model])
-        args.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
     else:
         args.ca_layers = trial.suggest_categorical('ca_layers', [0])
         args.pd_layers = 1
