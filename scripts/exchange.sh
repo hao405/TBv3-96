@@ -19,7 +19,7 @@ export MIOPEN_DEBUG_DISABLE_FIND_DB=1
 export HIP_VISIBLE_DEVICES=$GPU
 alpha=0.35
 data_name=exchange_rate
-for pred_len in 192 336 192 336
+for pred_len in 192 336 192 336 96
 do
   HIP_VISIBLE_DEVICES=$GPU \
   python -u tune2.py \
@@ -38,7 +38,7 @@ do
     --pd_layers 1 \
     --ia_layers 3 \
     --des 'Exp' \
-    --d_model 64 \
+    --d_model 128 \
     --d_ff 128 \
     --batch_size 64 \
     --alpha $alpha \
