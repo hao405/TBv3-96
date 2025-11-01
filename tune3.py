@@ -105,12 +105,12 @@ def objective(trial):
     args.pd_layers = 1
     args.ia_layers = trial.suggest_categorical('ia_layers', [1])
 
-    possible_n_heads = [h for h in [4,32,64] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [4,32,64,128] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     #args.num_p = trial.suggest_categorical('num_p', [4,6,8,12])
-    args.alpha = trial.suggest_float('alpha', 0, 0.12, log=True)
+    args.alpha = trial.suggest_float('alpha', 0.00001 , 0.12, log=True)
     # # d_ff 通常是 d_model 的倍数
     #args.d_ff = trial.suggest_categorical('d_ff_multiplier', [1, 2, 4]) * args.d_model
 

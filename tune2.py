@@ -106,6 +106,8 @@ def objective(trial):
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [1,2])
+        args.d_model = trial.suggest_categorical('d_model', [64, 128, 256 ,512])
+        args.d_ff = trial.suggest_categorical('d_ff', [args.d_model])
         args.alpha = trial.suggest_float('alpha', 0.05, 0.40, log=True)
     elif args.data_path == 'ETTm2.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
@@ -116,6 +118,8 @@ def objective(trial):
         args.ca_layers = trial.suggest_categorical('ca_layers', [0,1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
+        args.d_model = trial.suggest_categorical('d_model', [64, 128, 256 ,512])
+        args.d_ff = trial.suggest_categorical('d_ff', [args.d_model])
         args.alpha = trial.suggest_float('alpha', 0.30, 0.40, log=True)
     else:
         args.ca_layers = trial.suggest_categorical('ca_layers', [0])
@@ -225,7 +229,6 @@ if __name__ == '__main__':
         f.write("Best Hyperparameters:\n")
         for key, value in best_trial.params.items():
             f.write(f"  - {key}: {value}\n")
-        f.write(f"d_ff:{args.d_ff}")
 
     print(f"最佳结果已成功写入！")
 
