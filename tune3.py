@@ -105,7 +105,7 @@ def objective(trial):
     args.pd_layers = 1
     args.ia_layers = trial.suggest_categorical('ia_layers', [1])
 
-    possible_n_heads = [h for h in [4,32,64,128] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [4,32,64] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
