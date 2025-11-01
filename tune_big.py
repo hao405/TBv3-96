@@ -96,11 +96,11 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 1e-3, log=True)
+    args.learning_rate = trial.suggest_float('learning_rate', 3e-4, 7e-4, log=True)
     if args.data_path == 'electricity.csv':
         args.batch_size = trial.suggest_categorical('batch_size', [64])
     elif args.data_path == 'traffic.csv':
-        args.batch_size = trial.suggest_categorical('batch_size', [24])
+        args.batch_size = trial.suggest_categorical('batch_size', [32])
     else:
         args.batch_size = trial.suggest_categorical('batch_size', [16,32,48,64])
 
@@ -109,7 +109,7 @@ def objective(trial):
     # args.pd_layers = 1
     # args.ia_layers = trial.suggest_categorical('ia_layers', [0,1])
     # args.attn_dropout = trial.suggest_float('attn_dropout', 0, 0.25, step=0.05)
-    possible_n_heads = [h for h in [32,64,128] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [32,64] if args.d_model % h == 0]
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
