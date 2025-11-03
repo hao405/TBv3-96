@@ -12,14 +12,16 @@ fi
 
 model_name=TimeBridge
 seq_len=720
-GPU=7
+GPU=0,1,2,3,4,5,6,7
 root=./dataset
 
 alpha=0.05
 data_name=Solar
 for pred_len in 96 192 336 720 96 192 336 720
 do
-  CUDA_VISIBLE_DEVICES=$GPU \
+  MIOPEN_DISABLE_CACHE=1 \
+  MIOPEN_SYSTEM_DB_PATH="" \
+  HIP_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" \
   python -u tune.py \
     --is_training 1 \
     --root_path $root/Solar/ \

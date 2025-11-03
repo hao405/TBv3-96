@@ -97,8 +97,8 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 7e-5, 2e-4, log=True)
-    args.batch_size = trial.suggest_categorical('batch_size', [16,32,48])
+    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 4e-4, log=True)
+    args.batch_size = trial.suggest_categorical('batch_size', [16,32,64])
 
     # # 学习率调度器
     args.ca_layers = trial.suggest_categorical('ca_layers', [1])
@@ -110,7 +110,7 @@ def objective(trial):
         raise optuna.exceptions.TrialPruned()
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     #args.num_p = trial.suggest_categorical('num_p', [4,6,8,12])
-    args.alpha = trial.suggest_float('alpha', 0.00001 , 0.12, log=True)
+    args.alpha = trial.suggest_float('alpha', 0.00001 , 0.08, log=True)
     # # d_ff 通常是 d_model 的倍数
     #args.d_ff = trial.suggest_categorical('d_ff_multiplier', [1, 2, 4]) * args.d_model
 
