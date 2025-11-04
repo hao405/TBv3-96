@@ -197,7 +197,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         # mse loss
         mse_loss = ((outputs - batch_y) ** 2).mean()
 
-        return (1 - self.args.alpha - self.args.beta) * t_loss + \
+        return (1 - self.args.alpha) * t_loss + \
             self.args.alpha * f_loss + \
             self.args.beta * mse_loss
     
