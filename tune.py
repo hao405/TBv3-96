@@ -98,8 +98,8 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 1e-3, log=True)
-    args.batch_size = trial.suggest_categorical('batch_size', [16,32,48,64])
+    args.learning_rate = trial.suggest_float('learning_rate', 2e-4, 7e-4, log=True)
+    args.batch_size = trial.suggest_categorical('batch_size', [16,32,48])
 
     # 学习率调度器
     if args.data_path == 'ETTh2.csv':
