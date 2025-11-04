@@ -26,6 +26,7 @@ def objective(trial):
     # ablation control flags
     parser.add_argument('--revin', action='store_false', help='non-stationary for short-term', default=True)
     parser.add_argument('--alpha', type=float, default=0.2, help='weight of time-frequency MAE loss')
+    parser.add_argument('--beta', type=float, default=0.1, help='weight of mse loss')
     parser.add_argument('--dropout', type=float, default=0.0, help='dropout')
     parser.add_argument('--attn_dropout', type=float, default=0.15, help='dropout')
     parser.add_argument('--batch_size', type=int, default=32, help='batch size of train input data')

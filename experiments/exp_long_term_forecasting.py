@@ -194,9 +194,13 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         # freq mae loss
         f_loss = torch.fft.rfft(outputs, dim=1) - torch.fft.rfft(batch_y, dim=1)
         f_loss = f_loss.abs().mean()
+        # mse loss
+        mse_loss = ((outputs - batch_y) ** 2).mean()
 
-        return (1 - self.args.alpha) * t_loss + self.args.alpha * f_loss
-
+        return (1 - self.args.alpha - self.args.beta) * t_loss + \
+            self.args.alpha * f_loss + \
+            self.args.beta * mse_loss
+    
     def test(self, setting, test=0):
         test_data, test_loader = self._get_data(flag='test')
         if test:
