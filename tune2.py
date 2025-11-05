@@ -110,7 +110,7 @@ def objective(trial):
     args.alpha = trial.suggest_float('alpha', 0.08, 0.14, log=True)
 
         
-    possible_n_heads = [h for h in [2,4] if args.d_model % h == 0]
+    possible_n_heads = [h for h in [4] if args.d_model % h == 0]
     
     if not possible_n_heads:  # 如果没有可用的 n_heads，则跳过此次试验
         raise optuna.exceptions.TrialPruned()
