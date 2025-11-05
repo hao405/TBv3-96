@@ -98,8 +98,8 @@ def objective(trial):
     # Optuna 将从这里动态地建议超参数，覆盖默认值
     args = parser.parse_args()  # 使用空列表来避免解析命令行
 
-    args.learning_rate = trial.suggest_float('learning_rate', 1e-4, 3e-4, log=True)
-    args.batch_size = trial.suggest_categorical('batch_size', [48,64,128])
+    args.learning_rate = trial.suggest_float('learning_rate', 1.5e-4, 2.5e-4, log=True)
+    args.batch_size = trial.suggest_categorical('batch_size', [64])
 
 
     # 学习率调度器
@@ -107,7 +107,7 @@ def objective(trial):
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
         args.pd_layers = 1
         args.ia_layers = trial.suggest_categorical('ia_layers', [2])
-        args.alpha = trial.suggest_float('alpha', 0.32, 0.40, log=True)
+        args.alpha = trial.suggest_float('alpha', 0.08, 0.14, log=True)
     elif args.data_path == 'ETTm2.csv':
         args.ca_layers = trial.suggest_categorical('ca_layers', [1])
         args.pd_layers = 1
@@ -180,7 +180,7 @@ if __name__ == '__main__':
 
     # 'n_trials' 是你想要尝试的超参数组合的总次数
     # 从一个较小的数字开始，比如 20，然后再增加
-    study.optimize(objective, n_trials=8)
+    study.optimize(objective, n_trials=4)
 
     # ---- 6. 输出优化结果 ----
     print("\n\n--- 优化完成 ---")
