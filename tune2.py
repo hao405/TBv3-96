@@ -103,21 +103,12 @@ def objective(trial):
 
 
     # 学习率调度器
-    if args.data_path == 'exchange_rate.csv':
-        args.ca_layers = trial.suggest_categorical('ca_layers', [1])
-        args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [2])
-        args.alpha = trial.suggest_float('alpha', 0.08, 0.14, log=True)
-    elif args.data_path == 'ETTm2.csv':
-        args.ca_layers = trial.suggest_categorical('ca_layers', [1])
-        args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [2])
-        args.alpha = trial.suggest_float('alpha', 0.28, 0.40, log=True)
-    else:
-        args.ca_layers = trial.suggest_categorical('ca_layers', [0])
-        args.pd_layers = 1
-        args.ia_layers = trial.suggest_categorical('ia_layers', [2,3])
-        args.alpha = trial.suggest_float('alpha', 0.3, 0.40, log=True)
+
+    args.ca_layers = trial.suggest_categorical('ca_layers', [1])
+    args.pd_layers = 1
+    args.ia_layers = trial.suggest_categorical('ia_layers', [2])
+    args.alpha = trial.suggest_float('alpha', 0.08, 0.14, log=True)
+
         
     possible_n_heads = [h for h in [2,4] if args.d_model % h == 0]
     
@@ -197,7 +188,7 @@ if __name__ == '__main__':
         print(f"    - {key}: {value}")
 
     # ---- 7. 将最佳结果写入文件 ----
-    output_dir = 'optuna_exchange'
+    output_dir = 'optuna_exchange192'
     os.makedirs(output_dir, exist_ok=True)  # 确保文件夹存在
     # 从 data_path 中提取基本文件名，以避免路径问题
     # 例如, 从 './dataset/ETTh1.csv' 提取出 'ETTh1'
