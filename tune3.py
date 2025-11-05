@@ -112,7 +112,7 @@ def objective(trial):
     args.n_heads = trial.suggest_categorical('n_heads', possible_n_heads)
     #args.num_p = trial.suggest_categorical('num_p', [4,6,8,12])
     args.alpha = trial.suggest_float('alpha', 0.00001 , 0.08, log=True)
-    args.beta = trial.suggest_float('beta', 0.05 , 0.13, log=True)
+    args.beta = trial.suggest_float('beta', 0.000005 , 0.08, log=True)
     # # d_ff 通常是 d_model 的倍数
     #args.d_ff = trial.suggest_categorical('d_ff_multiplier', [1, 2, 4]) * args.d_model
 
