@@ -10,7 +10,7 @@ os.environ["MIOPEN_SYSTEM_DB_PATH"] = ""
 # 配置基础参数
 model_name = "TimeBridge"
 data_name = "solar_AL"
-root='./data' # 数据集根路径
+root='./dataset' # 数据集根路径
 data_path = 'Solar' # 可选[ETT-small，electricity，exchange_rate，illness，traffic，weather]
 seq_len=96
 alpha=0.000966298
