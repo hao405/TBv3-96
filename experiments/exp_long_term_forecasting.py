@@ -270,7 +270,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         mae, mse, rmse, mape, mspe = metric(preds, trues)
         print('mse:{}, mae:{}'.format(mse, mae))
         print('rmse:{}, mape:{}, mspe:{}'.format(rmse, mape, mspe))
-        f = open("result_long_term_forecast.txt", 'a')
+        f = open("solar192to720_result_long_term_forecast.txt", 'a')
         f.write(setting + "  \n")
         f.write('mse:{}, mse:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
         f.write('\n')
