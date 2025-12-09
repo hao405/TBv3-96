@@ -38,7 +38,7 @@ def objective(trial):
 
     # data loader
     parser.add_argument('--data', type=str, default='ETTh1')
-    parser.add_argument('--root_path', type=str, default='./dataset/ETT-small/')
+    parser.add_argument('--root_path', type=str, default='./data/ETT-small/')
     parser.add_argument('--data_path', type=str, default='ETTh1.csv')
     parser.add_argument('--features', type=str, default='M')
     parser.add_argument('--target', type=str, default='OT')
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     # 'minimize' 表示我们的目标是让 objective 函数的返回值（验证损失）最小化
     start_time = time.time()
     parser = argparse.ArgumentParser(description='getting file name')
-    parser.add_argument('--data', type=str, default='ETTh1', help='dataset name')
+    parser.add_argument('--data', type=str, default='ETTh1', help='data name')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
     parser.add_argument('--data_path', type=str, default='ETTh1.csv')
     parser.add_argument('--seq_len', type=int, default=96, help='input sequence length')
@@ -197,11 +197,11 @@ if __name__ == '__main__':
     output_dir = 'optuna_etth'
     os.makedirs(output_dir, exist_ok=True)  # 确保文件夹存在
     # 从 data_path 中提取基本文件名，以避免路径问题
-    # 例如, 从 './dataset/ETTh1.csv' 提取出 'ETTh1'
+    # 例如, 从 './data/ETTh1.csv' 提取出 'ETTh1'
     base_filename = os.path.basename(args.data_path)  # 获取 'ETTh1.csv'
     filename_without_ext = os.path.splitext(base_filename)[0] # 获取 'ETTh1'
 
-    # 根据 dataset 和 pred_len 动态生成文件名
+    # 根据 data 和 pred_len 动态生成文件名
     filename = f"{filename_without_ext}_seqlen_{args.seq_len}_predlen_{args.pred_len}_results.txt"
     file_path = os.path.join(output_dir, filename)
 

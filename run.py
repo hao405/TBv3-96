@@ -7,10 +7,6 @@ import random
 import numpy as np
 
 if __name__ == '__main__':
-    fix_seed = 2023
-    random.seed(fix_seed)
-    torch.manual_seed(fix_seed)
-    np.random.seed(fix_seed)
 
     parser = argparse.ArgumentParser(description='TimeBridge')
 
@@ -28,7 +24,7 @@ if __name__ == '__main__':
     parser.add_argument('--model', type=str, required=True, default='TimeBridge', help='model name')
 
     # data loader
-    parser.add_argument('--data', type=str, required=True, default='custom', help='dataset type')
+    parser.add_argument('--data', type=str, required=True, default='custom', help='data type')
     parser.add_argument('--root_path', type=str, default='./data/electricity/', help='root path of the data file')
     parser.add_argument('--data_path', type=str, default='electricity.csv', help='data csv file')
     parser.add_argument('--features', type=str, default='M',
@@ -83,6 +79,7 @@ if __name__ == '__main__':
     parser.add_argument('--devices', type=str, default='0,1,2,3,4,5,6,7', help='device ids of multile gpus')
 
     parser.add_argument('--inverse', action='store_true', help='inverse output data', default=False)
+    parser.add_argument('--seed', type=int, default=2023, help="random seed")
 
     args = parser.parse_args()
     args.use_gpu = True if torch.cuda.is_available() and args.use_gpu else False
@@ -95,6 +92,11 @@ if __name__ == '__main__':
 
     print('Args in experiment:')
     print(args)
+
+    fix_seed = args.seed
+    random.seed(fix_seed)
+    torch.manual_seed(fix_seed)
+    np.random.seed(fix_seed)
 
     Exp = Exp_Long_Term_Forecast
 
