@@ -93,7 +93,7 @@ class Model(nn.Module):
         x_std = self.encoder1(x_std)[0][:, :self.c_in, ...]
         x_std = self.decoder1(x_std).transpose(-1, -2)
 
-        dec_out = self.reparametrize(x_mean, x_std)
+        dec_out = self.reparametrize(x_mean, x_std) if self.training else x_mean
 
         dec_out = self.final_mlp(dec_out)
 
