@@ -74,6 +74,11 @@ class Model(nn.Module):
         z = mu + std * eps
         return z
 
+    def standardize(self,x, dim=-1, keepdim=True, eps=1e-5):
+        mean = x.mean(dim=dim, keepdim=keepdim)
+        std = x.std(dim=dim, keepdim=keepdim)
+        return (x - mean) / (std + eps)
+
     def forecast(self, x_enc, x_mark_enc, x_dec, x_mark_dec):
         if x_mark_enc is None:
             x_mark_enc = torch.zeros((*x_enc.shape[:-1], 4), device=x_enc.device)
@@ -87,10 +92,12 @@ class Model(nn.Module):
 
         x_mean = self.embedding(x_enc, x_mark_enc)
         x_mean = self.encoder(x_mean)[0][:, :self.c_in, ...]
+        x_mean = self.standardize(x_mean)
         x_mean = self.decoder(x_mean).transpose(-1, -2)
 
         x_std = self.embedding1(x_enc, x_mark_enc)
         x_std = self.encoder1(x_std)[0][:, :self.c_in, ...]
+        x_std = self.standardize(x_std)
         x_std = self.decoder1(x_std).transpose(-1, -2)
 
         dec_out = self.reparametrize(x_mean, x_std) if self.training else x_mean
