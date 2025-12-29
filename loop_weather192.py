@@ -2,9 +2,8 @@ import subprocess
 import os
 from itertools import product
 
-
 # 设置环境变量（指定GPU）
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 os.environ["MIOPEN_DISABLE_CACHE"] = "1"
 os.environ["MIOPEN_SYSTEM_DB_PATH"] = ""
 
@@ -14,19 +13,20 @@ data_name = "weather"
 root='./data' # 数据集根路径
 data_path = 'weather' # 可选[ETT-small，electricity，exchange_rate，illness，traffic，weather]
 seq_len=96
-alpha=0.007228817
+alpha=0.00775418
 
 enc_in=21
 
 # 定义要搜索的参数网格
-pred_len = [96]
-batch_sizes = [16]
-learning_rates = [0.000169724]
+pred_len = [192]
+batch_sizes = [32]
+learning_rates = [0.000241256]
 ca_layers = [1]  # 长期
 pd_layers = [1]
 ia_layers = [1]  # 短期
-seed=list(range(1900,2000))
+seed=list(range(2024,2040))
 rec_weight=[1]
+
 # 生成所有参数组合
 param_combinations = product(batch_sizes, learning_rates,ca_layers,pd_layers,ia_layers,pred_len,seed)
 
@@ -53,16 +53,16 @@ for batch_size,lr,ca_layers,pd_layers,ia_layers,pred_len ,seed in param_combinat
         "--ia_layers", str(ia_layers),
         "--des","Exp",
         "--period", "48",
-        "--n_heads","4",
+        "--n_heads","64",
         "--d_ff", "128",
         "--d_model", "128",
         "--alpha", f"{alpha}",
         "--itr", "1",
         "--batch_size",str(batch_size),
         "--learning_rate",str(lr),
-        "--seed",str(seed),
         "--gpu", "0",
-        "--num_p", "12"
+        "--seed",str(seed),
+        "--num_p", "12",
     ]
 
     # 执行命令并实时输出

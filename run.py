@@ -103,7 +103,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = '{}_{}_{}_bs{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_ial{}_pdl{}_cal{}_df{}_eb{}_{}_{}'.format(
+            setting = '{}_{}_{}_bs{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_ial{}_pdl{}_cal{}_df{}_seed{}{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -118,8 +118,7 @@ if __name__ == '__main__':
                 args.pd_layers,
                 args.ca_layers,
                 args.d_ff,
-                args.embed,
-                args.des, ii)
+                args.seed,ii)
 
             exp = Exp(args)  # set experiments
             print('>>>>>>>start training : {}>>>>>>>>>>>>>>>>>>>>>>>>>>'.format(setting))
@@ -130,7 +129,7 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
     else:
         ii = 0
-        setting = '{}_{}_{}_bs{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_ial{}_pdl{}_cal{}_df{}_eb{}_{}_{}'.format(
+        setting = '{}_{}_{}_bs{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_ial{}_pdl{}_cal{}_df{}_eb{}_{}seed{}'.format(
             args.model_id,
             args.model,
             args.data,
@@ -146,7 +145,8 @@ if __name__ == '__main__':
             args.ca_layers,
             args.d_ff,
             args.embed,
-            args.des, ii)
+            args.des,
+            args.seed,ii)
 
         exp = Exp(args)  # set experiments
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))

@@ -38,12 +38,8 @@ class Model(nn.Module):
         self.final_mlp = nn.Sequential(
             nn.Linear(self.c_in, self.c_in),
         )
-        with torch.no_grad():
-            # 直接使用torch.eye创建单位矩阵
-            self.final_mlp[0].weight.data = torch.eye(self.c_in)
 
-            # 将偏置初始化为零
-            self.final_mlp[0].bias.data.zero_()
+
 
     def layers_init(self, configs):
         integrated_attention = [IntAttention(
@@ -92,15 +88,15 @@ class Model(nn.Module):
 
         x_mean = self.embedding(x_enc, x_mark_enc)
         x_mean = self.encoder(x_mean)[0][:, :self.c_in, ...]
-        x_mean = self.standardize(x_mean)
+        # x_mean = self.standardize(x_mean)
         x_mean = self.decoder(x_mean).transpose(-1, -2)
 
         x_std = self.embedding1(x_enc, x_mark_enc)
         x_std = self.encoder1(x_std)[0][:, :self.c_in, ...]
-        x_std = self.standardize(x_std)
+        # x_std = self.standardize(x_std)
         x_std = self.decoder1(x_std).transpose(-1, -2)
 
-        dec_out = self.reparametrize(x_mean, x_std) if self.training else x_mean
+        dec_out = self.reparametrize(x_mean, x_std)
 
         dec_out = self.final_mlp(dec_out)
 

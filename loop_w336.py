@@ -3,8 +3,9 @@ import os
 from itertools import product
 
 
+
 # 设置环境变量（指定GPU）
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 os.environ["MIOPEN_DISABLE_CACHE"] = "1"
 os.environ["MIOPEN_SYSTEM_DB_PATH"] = ""
 
@@ -14,24 +15,25 @@ data_name = "weather"
 root='./data' # 数据集根路径
 data_path = 'weather' # 可选[ETT-small，electricity，exchange_rate，illness，traffic，weather]
 seq_len=96
-alpha=0.007228817
+alpha=0.002342227
 
 enc_in=21
 
 # 定义要搜索的参数网格
-pred_len = [96]
-batch_sizes = [16]
-learning_rates = [0.000169724]
+pred_len = [336]
+batch_sizes = [64]
+learning_rates = [0.000139017]
 ca_layers = [1]  # 长期
 pd_layers = [1]
 ia_layers = [1]  # 短期
-seed=list(range(1900,2000))
+seed=list(range(726,1000))
+n_head = [64]
 rec_weight=[1]
 # 生成所有参数组合
-param_combinations = product(batch_sizes, learning_rates,ca_layers,pd_layers,ia_layers,pred_len,seed)
+param_combinations = product(batch_sizes, learning_rates,ca_layers,pd_layers,ia_layers,pred_len,seed,n_head)
 
 # 遍历每个参数组合并执行命令
-for batch_size,lr,ca_layers,pd_layers,ia_layers,pred_len ,seed in param_combinations:
+for batch_size,lr,ca_layers,pd_layers,ia_layers,pred_len ,seed,n_head in param_combinations:
     print(f"\n===== 开始执行参数组合: batch_size={batch_size}, learning_rate={lr}，seed={seed}=====")
 
     # 构建命令列表
@@ -53,7 +55,7 @@ for batch_size,lr,ca_layers,pd_layers,ia_layers,pred_len ,seed in param_combinat
         "--ia_layers", str(ia_layers),
         "--des","Exp",
         "--period", "48",
-        "--n_heads","4",
+        "--n_heads",str(n_head),
         "--d_ff", "128",
         "--d_model", "128",
         "--alpha", f"{alpha}",
